@@ -41,14 +41,14 @@ Source installation may be preferable if you want to obtain the latest version o
 
 ``` bash
 
-git clone https://github.com/abdealijivaji/ViralRecall_3.0.git
+git clone https://github.com/abdealijivaji/ViralRecall.git
 
 ```
 
 To install viralrecall in a conda environment from source, run:
 
 ``` bash
-cd Viralrecall_3.0
+cd ViralRecall
 conda env create -n viralrecall -f environment.yaml
 conda activate viralrecall
 pip install --no-build-isolation --no-deps .
