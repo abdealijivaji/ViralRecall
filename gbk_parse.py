@@ -6,46 +6,26 @@ import pandas as pd
 gbkFile = Path("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig.gbk")
 
 gbk = SeqIO.read(open(gbkFile, "r"), "genbank")
+annotfile = Path("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig.tsv")
+summ_file = pd.read_table(annotfile, header=0, sep="\t")
 
-# print(f"IDs in file: {gbk.features[2]} ")
+print(summ_file.columns)
+# print(gbk.features[0].qualifiers['locus_tag'])
+#print(f"IDs in file: {gbk.features[0]} ")
 
-def features_to_dataframe(recs, cds=False):
-    """Get genome records from a biopython features object into a dataframe
-      returns a dataframe with a row for each cds/entry"""
+feature_keys = [i.qualifiers.get('locus_tag') for i in gbk.features]
 
-    genome = recs[0]
-    #preprocess features
-    allfeat = []
-    for (item, f) in enumerate(genome.features):
-        x = f.__dict__
-        q = f.qualifiers
-        x.update(q)
-        d = {}
-        d['start'] = f.location.start
-        d['end'] = f.location.end
-        d['strand'] = f.location.strand
-        for i in f.keys:
-            if i in x:
-                if type(x[i]) is list:
-                    d[i] = x[i][0]
-                else:
-                    d[i] = x[i]
-        allfeat.append(d)
+# print(summ_file['HMM_hit'].loc[summ_file['query'] == "contig_536_1"].values)
 
-    import pandas as pd
-    df = pd.DataFrame(allfeat,columns=f.keys)
-    df['length'] = df.translation.astype('str').str.len()
-    #print (df)
-    # df = check_tags(df)
-    # if cds == True:
-    #     df = get_cds(df)
-    #     df['order'] = range(1,len(df)+1)
-    #print (df)
-    if len(df) == 0:
-        print ('ERROR: genbank file return empty data, check that the file contains protein sequences '\
-               'in the translation qualifier of each protein feature.' )
-    return df
+for record in gbk.features:
+    query = record.qualifiers.get('locus_tag')[0]
+    # print(query)
+    # print(summ_file.loc[summ_file['query'] == query , 'HMM_hit'].item() )
+    record.qualifiers['product'] = summ_file.loc[summ_file['query'] == query , 'Description'].item()
+    
+print(gbk)
 
-features = features_to_dataframe(gbk)
+outputpath = Path("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig_ncvog_desc.gbk")
 
-print(features)
+with open(outputpath, 'w') as outfile :
+    SeqIO.write(gbk, outfile, 'genbank')
