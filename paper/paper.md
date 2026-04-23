@@ -9,13 +9,15 @@ authors:
    orcid: 0000-0003-2474-9561
    affiliation: 1
    corresponding: true
+ - name: Thomas J. Dalessio
+   affiliation: 1
  - name: Frank O. Aylward
    orcid: 0000-0002-1279-4050
    affiliation: "1, 2"
 affiliations:
- - name: Dept. of Biological Sciences, Virginia Tech
+ - name: Dept. of Biological Sciences, Virginia Tech, Blacksburg, Virginia, USA
    index: 1
- - name: Department of Biological Sciences and Center for Emerging, Zoonotic, and Arthropod-borne Pathogens, Virginia Tech, Blacksburg, Virginia, USA
+ - name: Center for Emerging, Zoonotic, and Arthropod-borne Pathogens, Virginia Tech, Blacksburg, Virginia, USA
    index: 2
 date: 1 February 2027
 bibliography: paper.bib
@@ -52,7 +54,7 @@ We used Github copilot for basic autocomplete and the chatbot for suggestions re
 
 # Author Contributions
 
-**Abdeali M. Jivaji:** Methodology, Software, Writing - Original Draft. **Frank O. Aylward:** Review, Conceptualization, Resources, Supervision.
+**Abdeali M. Jivaji:** Methodology, Software, Writing - Original Draft. **Thomas J. Dalessio:** Software **Frank O. Aylward:** Review, Conceptualization, Resources, Supervision.
 
 # Acknowledgements
 
