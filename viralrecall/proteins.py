@@ -65,7 +65,7 @@ def search_with_pyhmmer(proteins: easel.TextSequenceBlock,
 	digseqs = easel.DigitalSequenceBlock(amino, proteins.digitize(amino))
 	
 	with plan7.HMMFile(hmm_path) as hmm_file:
-		hits = list(hmmer.hmmsearch(hmm_file, digseqs, E=evalue))
+		hits = list(hmmer.hmmsearch(hmm_file, digseqs, E=evalue, cpus = 4))
 	return hits	
 	
 		

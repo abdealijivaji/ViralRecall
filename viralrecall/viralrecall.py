@@ -242,7 +242,7 @@ def main(argv=None):
 			newinput = input / i
 			arg_list.append((newinput, out_base, database, window, phagesize, minscore, evalue, minhit)) 
 		
-		with mp.Pool(cpus) as pool:
+		with mp.Pool(cpus, maxtasksperchild = 1) as pool:
 			pool.starmap(run_program, arg_list)
 			print(f"Finished running ViralRecall on all files in {input} and the output has been deposited in {project}")
 
