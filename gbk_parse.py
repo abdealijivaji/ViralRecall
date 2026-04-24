@@ -3,10 +3,10 @@ from Bio import SeqIO
 from pathlib import Path
 import pandas as pd
 
-gbkFile = Path("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig.gbk")
+gbkFile = Path("~/viralR_test_output/Chlamy_punui/Chlamy_punui_contig.gbk").expanduser()
 
 gbk = SeqIO.read(open(gbkFile, "r"), "genbank")
-annotfile = Path("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig.tsv")
+annotfile = Path("~/viralR_test_output/Chlamy_punui/Chlamy_punui_contig.tsv").expanduser()
 summ_file = pd.read_table(annotfile, header=0, sep="\t")
 
 print(summ_file.columns)
@@ -25,7 +25,7 @@ for record in gbk.features:
     
 print(gbk)
 
-outputpath = Path("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig_ncvog_desc.gbk")
+outputpath = Path("~/viralR_test_output/Chlamy_punui/Chlamy_punui_contig_ncvog_desc.gbk").expanduser()
 
 with open(outputpath, 'w') as outfile :
     SeqIO.write(gbk, outfile, 'genbank')
