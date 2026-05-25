@@ -9,6 +9,9 @@ authors:
    orcid: 0000-0003-2474-9561
    affiliation: 1
    corresponding: true
+ - name: Anh D. Ha
+   orcid: 0000-0002-6381-9756
+   affiliation: 1
  - name: Thomas J. Dalessio
    affiliation: 1
  - name: Frank O. Aylward
