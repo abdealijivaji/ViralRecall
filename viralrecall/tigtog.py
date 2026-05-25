@@ -2,20 +2,16 @@
 This is a modified version of TIGTOG originally written by Dr. Anh D. Ha and is available on <https://github.com/anhd-ha/TIGTOG>
 '''
 
+
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
 import joblib
 import csv, re
 from pyfaidx import Fasta
 from pathlib import Path
-from collections import Counter, defaultdict
-
 
 input_gen = Path("/home/abdeali/viralR_test_output/Chlamy_punui/contig_536_vregion_1.fna")
 vreg_tab = pd.read_csv("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig_viralregions.annot.tsv", sep= "\t", header=0)
-
-# print(vreg_tab)
 
 vreg = Fasta(input_gen)
 
@@ -71,8 +67,8 @@ def create_df(gc_perc, hitdict) :
     
     df = pd.DataFrame(hitdict, index=["seq",])
     df.insert(0, "GC_content", gc_perc)
-    print(df)
-
+    #print(df)
+    return df
 # create_df(get_gc(vreg), hitdict)
 
 
@@ -99,15 +95,18 @@ def run_tigtog(vreg: Fasta, table: pd.DataFrame) :
     
     hitdict = parse_hits(table, both_levels)
     input_df = create_df(GC_perc, hitdict)
-
-    ord_file = Path("/home/abdeali/hmm/clf/clf_Order_final.joblib")
-    fam_file = Path("/home/abdeali/hmm/clf/clf_Fam_final.joblib")
-
-    Ord_pred, Ord_prob = tax_predict(ord_file, input_df)
-    print(f"Predicted order is {Ord_pred} with {Ord_prob} % probability")
+    Ord_df = input_df[order_levels]
+    # Fam_df = input_df[["GC_content"] + fam_levels]
+    
     
 
+    ord_file = Path("/home/abdeali/hmm/clf/retrained_clf_Order.joblib")
+    # fam_file = Path("/home/abdeali/hmm/clf/clf_Fam_final.joblib")
 
-# run_tigtog(vreg, vreg_tab)
 
-joblib.load("/home/abdeali/hmm/clf/clf_Order_final.joblib")
+    Ord_pred, Ord_prob = tax_predict(ord_file, Ord_df)
+    print(Ord_pred)
+    print(f"Predicted order is {Ord_pred} with {Ord_prob*100:.2f}% probability")
+    
+
+run_tigtog(vreg, vreg_tab)
