@@ -10,18 +10,21 @@ import csv, re
 from pyfaidx import Fasta
 from pathlib import Path
 
-input_gen = Path("/home/abdeali/viralR_test_output/Chlamy_punui/contig_536_vregion_1.fna")
-vreg_tab = pd.read_csv("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig_viralregions.annot.tsv", sep= "\t", header=0)
+# input_gen = Path("/home/abdeali/viralR_test_output/Chlamy_punui/contig_536_vregion_1.fna")
+# # # vreg_tab = pd.read_csv("/home/abdeali/viralR_test_output/Chlamy_punui/Chlamy_punui_contig_viralregions.annot.tsv", sep= "\t", header=0)
 
-vreg = Fasta(input_gen)
+# vreg = Fasta(input_gen)
 
-def get_gc(vreg : Fasta) -> float :
-    seq_len = len(vreg[0])
-    seq_np = np.asarray(vreg[0])
-    cnt = np.count_nonzero(seq_np == b"G") + np.count_nonzero(seq_np == b"C")
+def get_gc(vreg : str) -> float :
+    seq_len = len(vreg)
+    cnt = vreg.count("G") + vreg.count("C")
     GC_perc = round(cnt * 100 / seq_len, 2)
     return GC_perc
-    
+
+# vreg_seq = vreg[0][:].seq  # type: ignore
+# print(type(vreg_seq) )
+# gc_perc = get_gc(vreg_seq)
+# print(f"GC content of the viral region is {gc_perc}%")
 
 def density(table: pd.DataFrame, vreg: Fasta) -> float :
     prot_lens = pd.Series
@@ -30,7 +33,7 @@ def density(table: pd.DataFrame, vreg: Fasta) -> float :
     dens = round(100 * sum_len / len(vreg[0]), 2)
     return dens
 
-dens = density(vreg_tab, vreg)
+# dens = density(vreg_tab, vreg)
 
 def large_seq(vreg: Fasta) -> bool :
     if len(vreg[0]) > 5_000_000 :
@@ -75,7 +78,7 @@ def create_df(gc_perc, hitdict) :
 def tax_predict(clf_file, input_df) :
     
     clf = joblib.load(clf_file)
-    pred = clf.predict(input_df)
+    pred = clf.predict(input_df)[0]
     conf_pred = clf.predict_proba(input_df)
     class_labels = clf.classes_
     for i , prediction in enumerate(conf_pred) :
@@ -85,28 +88,25 @@ def tax_predict(clf_file, input_df) :
     return pred, confidence
 
 
-def run_tigtog(vreg: Fasta, table: pd.DataFrame) :
+def run_tigtog(vreg: str, table: pd.DataFrame , data_dir: Path) -> tuple[str, str] :
 
     GC_perc = get_gc(vreg)
 
-    both_levels =  imp_names(Path("/home/abdeali/hmm/db/names_imp_GVOGs_both_levels.csv"))
-    order_levels = imp_names(Path("/home/abdeali/hmm/db/names_imp_gvog_order.csv"))
-    fam_levels = imp_names(Path("/home/abdeali/hmm/db/names_imp_gvog_fam.csv"))
-    
+    both_levels =  imp_names(data_dir / "db/names_imp_GVOGs_both_levels.csv")
+    order_levels = imp_names(data_dir / "db/names_imp_gvog_order.csv")
+    fam_levels = imp_names(data_dir / "db/names_imp_gvog_fam.csv")
+
     hitdict = parse_hits(table, both_levels)
     input_df = create_df(GC_perc, hitdict)
     Ord_df = input_df[order_levels]
     # Fam_df = input_df[["GC_content"] + fam_levels]
     
-    
-
-    ord_file = Path("/home/abdeali/hmm/clf/retrained_clf_Order.joblib")
+    ord_file = data_dir / "clf/retrained_clf_Order.joblib"
     # fam_file = Path("/home/abdeali/hmm/clf/clf_Fam_final.joblib")
 
-
     Ord_pred, Ord_prob = tax_predict(ord_file, Ord_df)
-    print(Ord_pred)
-    print(f"Predicted order is {Ord_pred} with {Ord_prob*100:.2f}% probability")
+
+    return Ord_pred, f"{Ord_prob*100:.2f}"
     
 
-run_tigtog(vreg, vreg_tab)
+

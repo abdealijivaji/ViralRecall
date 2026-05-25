@@ -10,6 +10,7 @@ from .utils import load_genome, prep_hmm, filt_fasta, check_directory_permission
 from .vreg_annot import sliding_window_mean, merge_annot, extract_reg, str_hits
 from .log import setup_logger
 from .plot_vreg import plot_vreg
+from .tigtog import get_gc, run_tigtog
 
 __version__ = 3.0
 
@@ -113,7 +114,7 @@ def run_program(input : Path,
 	vir_summary = []
 	Summary = namedtuple("Summary", ["file", "contig", "contig_length", "num_viral_region", 
 								  "vstart", "vend", "vir_length", "num_prots", "num_viral_hits", 
-								  "score", "NCLDV_markers", "Mirusvirus_hits"])
+								  "score", "NCLDV_markers", "Mirusvirus_hits", "Predicted_order", "Order_confidence"])
 	
 	viral_indices = extract_reg(window, phagesize, minscore, filt_contig_list, df, minhit)
 	viral_coords = {}
@@ -136,7 +137,11 @@ def run_program(input : Path,
 				vreg_head : str = genome_file[key][vstart:vend].fancy_name # type: ignore
 				vreg_seq : str = genome_file[key][vstart:vend].seq # type: ignore
 				vreg_nuc_file = out_base.parent / f"{key}_vregion_{idx}.fna"
+				vreg_gc = get_gc(vreg_seq)
+				Ord_pred, Ord_prob = run_tigtog(vreg_seq, vregion_df, database)
 				
+				# print(f"Predicted order is {Ord_pred} with {Ord_prob}% probability")
+
 				vprots = ncldv_hmm_df.loc[ncldv_hmm_df['query'].isin(vregion_df['query'])]['HMM_hit']
 				NCLDV_hits = str_hits(vprots, "NCLDV")
 				mirus_hits = str_hits(vregion_df['HMM_hit'], "Mirus")
@@ -155,8 +160,10 @@ def run_program(input : Path,
 							   num_viral_hits= num_hits ,
 							   score= vregion_df["bitscore"].mean(),
 							   NCLDV_markers= NCLDV_hits,
-							   Mirusvirus_hits= mirus_hits)
-							   )
+							   Mirusvirus_hits= mirus_hits,
+							   Predicted_order= Ord_pred,
+							   Order_confidence= Ord_prob)
+				)
 				count += 1
 			viral_coords[key] = [starts, ends]
 		else:
@@ -171,9 +178,10 @@ def run_program(input : Path,
 							   num_viral_hits= "NA",
 							   score= str(0),
 							   NCLDV_markers= str_hits(ncldv_hmm_df[ncldv_hmm_df['query'] == key]['HMM_hit'], "NCLDV"),
-							   Mirusvirus_hits= str_hits(df[df["query"] == key ]['HMM_hit'], "Mirus")
-)
-							   )
+							   Mirusvirus_hits= str_hits(df[df["query"] == key ]['HMM_hit'], "Mirus"),
+							   Predicted_order= "NA",
+							   Order_confidence= "NA")
+			)
 			
 	summ_file = Path(str(out_base) + "_summary.tsv")
 	summ_df = pd.DataFrame(vir_summary)
