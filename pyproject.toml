@@ -38,7 +38,7 @@ build-backend = "setuptools.build_meta"
 packages = ["viralrecall"]
 
 [tool.setuptools.dynamic]
-version = {attr = "viralrecall.viralrecall.__version__"}
+version = {attr = "viralrecall.__version__"}
 
 [project.scripts]
 viralrecall = "viralrecall.viralrecall:main"

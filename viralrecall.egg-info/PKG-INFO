@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: viralrecall
-Version: 3.0
+Version: 3.1.0
 Summary: Tool to identify giant viruses integrated into eukaryotic genomes
 Author-email: "Abdeali M. Jivaji" <abdeali@vt.edu>, "Frank O. Aylward" <faylward@vt.edu>
 License-Expression: MIT
@@ -16,6 +16,8 @@ Requires-Dist: pandas==2.2.*
 Requires-Dist: progressbar==2.5
 Requires-Dist: requests==2.32.*
 Requires-Dist: matplotlib==3.10.*
+Requires-Dist: scikit-learn==1.8.*
+Requires-Dist: joblib==1.5.*
 Dynamic: license-file
 
 # Viralrecall v3.0
@@ -61,14 +63,14 @@ Source installation may be preferable if you want to obtain the latest version o
 
 ``` bash
 
-git clone https://github.com/abdealijivaji/ViralRecall_3.0.git
+git clone https://github.com/abdealijivaji/ViralRecall.git
 
 ```
 
 To install viralrecall in a conda environment from source, run:
 
 ``` bash
-cd Viralrecall_3.0
+cd ViralRecall
 conda env create -n viralrecall -f environment.yaml
 conda activate viralrecall
 pip install --no-build-isolation --no-deps .
