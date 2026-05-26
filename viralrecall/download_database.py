@@ -19,7 +19,7 @@ def check_file_hash(filepath: Path, expected_hash: str) -> bool:
 
 
 def download_file(url: str, filepath: Path) -> None:
-    compressed_hash = "0e0c10831bccc18544101b1466ad6347"
+    compressed_hash = "4a1926b1b4ac9d6d60e521a28c64c15d"
     if filepath.exists() and check_file_hash(filepath, compressed_hash):
         print("Database is already downloaded")
         return
