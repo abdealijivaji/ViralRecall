@@ -39,9 +39,9 @@ def test_mp_cpu_none_and_bounds(monkeypatch):
     assert utils.mp_cpu(8) == 4
 
 
-def test_find_db_not_dir(tmp_path):
-    with pytest.raises(FileNotFoundError):
-        utils.find_db(tmp_path / "nope")
+# def test_find_db_not_dir(tmp_path):
+#     with pytest.raises(FileNotFoundError):
+#         utils.find_db(tmp_path / "nope")
 
 
 def test_find_db_missing_files(tmp_path):

@@ -3,3 +3,9 @@
 .vscode/settings.json
 viralrecall/__pycache__/
 hmm/
+tests/__pycache__
+.pytest_cache
+.ruff_cache
+build
+tests/test_data
+viralrecall.egg-info/

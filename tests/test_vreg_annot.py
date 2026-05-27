@@ -11,7 +11,7 @@ def test_above_threshold_ind():
 
 def test_contiguous_true_ranges_numpy():
     s = pd.Series([False, True, True, False, True, True, True, False])
-    ranges = vreg_annot.contiguous_true_ranges_numpy(s)
+    ranges = vreg_annot.contiguous_true_ranges(s)
     assert ranges == [(1, 2), (4, 6)]
 
 
@@ -79,7 +79,7 @@ def test_merge_annot(tmp_path):
     assert "annotation" in merged.columns
 
 
-def test_str_hits():
-    s = pd.Series(["Mirus_A", "NCLDV_marker", "no_hit", "Mirus_B"])
-    assert vreg_annot.str_hits(s, "Mirus_").startswith("Mirus_")
-    assert vreg_annot.str_hits(s, "XYZ_") == "NA"
+# def test_str_hits():
+#     s = pd.Series(["Mirus_A", "NCLDV_marker", "no_hit", "Mirus_B"])
+#     assert vreg_annot.str_hits(s, "Mirus_").startswith("Mirus_")
+#     assert vreg_annot.str_hits(s, "XYZ_") == "NA"

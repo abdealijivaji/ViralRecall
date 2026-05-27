@@ -1,4 +1,4 @@
-# Viralrecall v3.0
+# Viralrecall v3
 
 [![Anaconda-Server Badge](https://anaconda.org/bioconda/viralrecall/badges/version.svg)](https://anaconda.org/bioconda/viralrecall)
 [![Anaconda-Server Badge](https://anaconda.org/bioconda/viralrecall/badges/downloads.svg)](https://anaconda.org/bioconda/viralrecall)
@@ -14,6 +14,7 @@ Written by Abdeali Jivaji, PhD Candidate in Aylward Lab with the help of Dr. Fra
 Viralrecall is a python tool to primarily identify Giant Endogenous Viral Elements (GEVEs) integrated in the genome of eukaryotes. The current version is an update on the original tool by Dr. Aylward and uses the same GVOG HMM database to detect signatures of giant viruses. The key motivation for updating Viralrecall was to make it more efficient at processing the larger euykaryotic genomes that are being published with the rise in popularity of long-read sequencing.
 
 We also include a small set of HMMs to detect key Mirusvirus hallmark proteins to aid in the detection of Mirusviruses. However, this feature is still in it's early stages and any detection of Mirusvirus proteins should be independently and manually verified by the user.
+With v3.1, we introduce a new database that contains an updated database. The link for this database is included in the `viralrecall_database` script to download it. The updated database includes additional files to automatically run the TIGTOG model trained by Dr. Anh D. Ha, originally used for the tool [TIGTOG](https://github.com/anhd-ha/TIGTOG/). With the model, Viralrecall can automatically calculate the predicted Order of a viral region and output it, along with the confidence probability in the summary file. This feature is still experimental.
 
 The old version of the tool written and hosted by Dr. Frank Aylward is deprecated but still available if needed on [github](https://github.com/faylward/viralrecall).
 
@@ -59,7 +60,7 @@ This will install a viralrecall and set up the dependencies in a conda environme
 
 ## Database Download
 
-The database used to predict viral regions is uploaded on a [Zenodo repository](https://zenodo.org/records/17859729) and can be downloaded by the following methods:
+The database used to predict viral regions is uploaded on a [Zenodo repository](https://zenodo.org/records/20401448) and can be downloaded by the following methods:
 
 * Either by running the installed tool to download and set up the hmm database directory
 
@@ -72,7 +73,7 @@ The `-d` flag can be used to specify the download directory (default: current wo
 * Or if you want to run it manually, you can do the following steps:
 
 ```bash
-wget https://zenodo.org/records/17859729/files/hmm.tar.gz
+wget https://zenodo.org/records/20401448/files/hmm.tar.gz
 tar -xvzf hmm.tar.gz
 ```
 
