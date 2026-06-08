@@ -50,9 +50,9 @@ To install viralrecall in a conda environment from source, run:
 
 ``` bash
 cd ViralRecall
-conda env create -n viralrecall -f environment.yaml
+conda env create -n viralrecall python=3.12
 conda activate viralrecall
-pip install --no-build-isolation --no-deps .
+pip install .
 
 ```
 
@@ -73,7 +73,7 @@ The `-d` flag can be used to specify the download directory (default: current wo
 * Or if you want to run it manually, you can do the following steps:
 
 ```bash
-wget https://zenodo.org/records/20401448/files/hmm.tar.gz
+wget https://zenodo.org/records/20401448/files/VR_hmm_database.tar.gz
 tar -xvzf hmm.tar.gz
 ```
 
