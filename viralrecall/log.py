@@ -1,31 +1,38 @@
-import logging, pyrodigal_gv, pyhmmer, pyfaidx, pandas, sys
+import logging
+import pyrodigal_gv
+import pyhmmer
+import pyfaidx
+import pandas
+import sys
 from pathlib import Path
-__version__ = 3.0
+from . import __version__
 
 
-def setup_logger(outbase_dir : Path, name):
-    
+def setup_logger(outbase_dir: Path, name):
+
     # set up logging to file - see previous section for more details
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(message)s',
-                        datefmt='%y-%m-%d %H:%M',
-                        filename= outbase_dir / 'file.log',
-                        filemode='w')
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s %(message)s",
+        datefmt="%y-%m-%d %H:%M",
+        filename=outbase_dir / "file.log",
+        filemode="w",
+    )
     # define a Handler which writes INFO messages or higher to the sys.stderr
     console = logging.StreamHandler()
     console.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s %(message)s',   datefmt='%y-%m-%d %H:%M')
+    formatter = logging.Formatter("%(asctime)s %(message)s", datefmt="%y-%m-%d %H:%M")
     console.setFormatter(formatter)
-    logging.getLogger('').addHandler(console)
+    logging.getLogger("").addHandler(console)
 
     # Now, we can log to the root logger, or any other logger. First the root...
     logging.debug(f"Viralrecall Version: {__version__}")
-    logging.debug(f'Python version: {sys.version}')
-    logging.debug(f'pyrodigal_gv version: {pyrodigal_gv.__version__}')
-    logging.debug(f'pyhmmer version: {pyhmmer.__version__}') # type: ignore
-    logging.debug(f'pyfaidx version: {pyfaidx.__version__}') # type: ignore
-    logging.debug(f"Pandas version: {pandas.__version__}") 
+    logging.debug(f"Python version: {sys.version}")
+    logging.debug(f"pyrodigal_gv version: {pyrodigal_gv.__version__}")
+    logging.debug(f"pyhmmer version: {pyhmmer.__version__}")  # type: ignore
+    logging.debug(f"pyfaidx version: {pyfaidx.__version__}")  # type: ignore
+    logging.debug(f"Pandas version: {pandas.__version__}")
 
     logger1 = logging.getLogger(name)
-    
+
     return logger1

@@ -11,7 +11,7 @@ authors:
    corresponding: true
  - name: Anh D. Ha
    orcid: 0000-0002-6381-9756
-   affiliation: 1
+   affiliation: 3
  - name: Thomas J. Dalessio
    affiliation: 1
  - name: Frank O. Aylward
@@ -22,13 +22,14 @@ affiliations:
    index: 1
  - name: Center for Emerging, Zoonotic, and Arthropod-borne Pathogens, Virginia Tech, Blacksburg, Virginia, USA
    index: 2
+ - name: National Center for Biotechnology Information, National Library of Medicine, National Institutes of Health, Bethesda, MD 20894, USA
 date: 1 February 2027
 bibliography: paper.bib
 ---
 
 # Summary
 
-Viralrecall 3.0 is a python tool to identify Giant Endogenous Viral Elements (GEVEs) integrated in the genome of eukaryotes. The current version is an update on the original tool by Dr. Aylward and uses the same GVOG HMM database to detect signatures of giant viruses [@aylward:2021]. The key motivation for updating `viralrecall` was to make it more efficient at processing the larger eukaryotic genomes that are being published with the rise in popularity of long-read sequencing.
+Viralrecall is a python tool to identify Giant Endogenous Viral Elements (GEVEs) integrated in the genome of eukaryotes. The current version is an update on the original tool by Dr. Aylward and uses the same GVOG HMM database to detect signatures of giant viruses [@aylward:2021]. The key motivation for updating `viralrecall` was to make it more efficient at processing the larger eukaryotic genomes that are being published with the rise in popularity of long-read sequencing.
 
 # Statement of Need
 
@@ -44,6 +45,7 @@ Although several tools exist to identify giant viruses based on DNA sequences, t
 # Software Design
 
 We identified that the major bottlenecks in the speed of the previous tool were in predicting proteins and performing database search against the GVOG database. The older package required calling binaries for the same via subprocess calls through python which were inefficient in utilizing the full system resources, especially on high performance computing clusters. Thus, in this update, we chose to utilize pyrodigal-gv [@Larralde:2022; @camargo:2024] and pyhmmer [@Larralde:2023] which are Cython bindings for the packages in the bottleneck. With these packages, we are able to more effictively utilize the resources available on modern computers and HPC clusters. Additionally, the old version performed database search against a giant virus specific GVOG database and the more general-purpose PFAM database of proteins. In this version, we eliminate the use of PFAM database search as this is a resource intensive search and instead use stricter parameters with GVOGs to delineate viral regions. These parameters are simple and numeric filters which are cheaper to perform in python natively.
+We also integrated a function initially written as the standalone tool "TIGTOG" [@Ha:2024] in viralrecall to seamlessly predict the taxonomy of the putative viral regions thereby reducing the number of steps by a user to go from genome sequence to virus identification.  
 
 # Research Impact Statement
 
@@ -57,7 +59,7 @@ We used Github copilot for basic autocomplete and the chatbot for suggestions re
 
 # Author Contributions
 
-**Abdeali M. Jivaji:** Methodology, Software, Writing - Original Draft. **Thomas J. Dalessio:** Software **Frank O. Aylward:** Review, Conceptualization, Resources, Supervision.
+**Abdeali M. Jivaji:** Methodology, Software, Writing - Original Draft. **Anh D. Ha:** Software, Dataset curation. **Thomas J. Dalessio:** Software **Frank O. Aylward:** Review, Conceptualization, Resources, Supervision.
 
 # Acknowledgements
 

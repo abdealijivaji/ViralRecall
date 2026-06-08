@@ -11,6 +11,7 @@ viralrecall/download_database.py
 viralrecall/log.py
 viralrecall/plot_vreg.py
 viralrecall/proteins.py
+viralrecall/tigtog.py
 viralrecall/utils.py
 viralrecall/viralrecall.py
 viralrecall/vreg_annot.py

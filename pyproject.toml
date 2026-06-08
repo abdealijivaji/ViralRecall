@@ -2,7 +2,7 @@
 name = "viralrecall"
 dynamic = ["version"]
 description = "Tool to identify giant viruses integrated into eukaryotic genomes"
-requires-python = ">=3.10, < 3.14"
+requires-python = ">=3.11, <=3.14"
 authors = [
     {name = "Abdeali M. Jivaji", email = "abdeali@vt.edu"},
     {name = "Frank O. Aylward", email = "faylward@vt.edu"}
@@ -18,16 +18,16 @@ dependencies = [
     "pandas==2.2.*",
     "progressbar==2.5",
     "requests==2.32.*",
-    "matplotlib == 3.10.*"
+    "matplotlib == 3.10.*",
+    "scikit-learn==1.8.*" ,
+    "joblib==1.5.*"
 ]
 keywords = ["giant virus", "virus", "genomics", "viralrecall"]
+
 [dependency-groups]
-test = [
-    "pytest == 8.2.0"
-]
-lint = [
-    "ruff == 0.4.4",
-]
+test = ["pytest == 8.2.0"]
+lint = ["ruff == 0.4.4"]
+
 [build-system]
 requires = ["setuptools>=70"]
 build-backend = "setuptools.build_meta"
@@ -36,7 +36,7 @@ build-backend = "setuptools.build_meta"
 packages = ["viralrecall"]
 
 [tool.setuptools.dynamic]
-version = {attr = "viralrecall.viralrecall.__version__"}
+version = {attr = "viralrecall.__version__"}
 
 [project.scripts]
 viralrecall = "viralrecall.viralrecall:main"

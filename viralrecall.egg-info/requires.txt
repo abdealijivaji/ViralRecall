@@ -6,3 +6,5 @@ pandas==2.2.*
 progressbar==2.5
 requests==2.32.*
 matplotlib==3.10.*
+scikit-learn==1.8.*
+joblib==1.5.*
