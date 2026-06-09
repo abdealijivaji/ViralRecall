@@ -8,4 +8,7 @@ tests/__pycache__
 .ruff_cache
 build
 tests/test_data
-viralrecall.egg-info/
+.gitignore
+VR_hmm_database.tar.gz
+viralrecall.egg-info/*
+VR_hmm_database/*

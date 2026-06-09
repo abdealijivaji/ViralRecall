@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 import shutil
-from time import time
+import time
 import requests
 import progressbar
 import numpy as np
@@ -61,8 +61,8 @@ def parse_args(argv=None):
         "-n",
         "--name",
         required=False,
-        default="hmm",
-        help='Name to give the database directory. Default is "hmm"',
+        default="VR_hmm_database",
+        help='Name to give the database directory. Default is "VR_hmm_database"',
     )
     args_parser = args_parser.parse_args()
 
@@ -85,7 +85,7 @@ def main():
         shutil.unpack_archive(db_file, out_dir, format="gztar")
         print("Finished unpacking")
     os.remove(db_file)
-    os.rename(out_dir / "hmm", db_dir)
+    os.rename(out_dir / "VR_hmm_database", db_dir)
     print(f"Preparing HMM database: {db_dir}")
     prep_hmm(db_dir)
 
