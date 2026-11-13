@@ -80,13 +80,15 @@ def extract_reg(
                     bp_diff = nxt_vstart - vend
 
                     if prot_diff > 5 and bp_diff > window:
-                        unq_hit = grp["HMM_hit"].iloc[strt_idx:end_idx].unique()
+                        unq_hit = grp["HMM_hit"].loc[strt_idx:end_idx].unique()
+                        print(f"contig {name}: Start index: {strt_idx}, End index: {end_idx}, Unique hits: {len(unq_hit)}")
                         if vend - vstart >= phagesize and len(unq_hit) > minhit:
                             viral_indices[name].append([strt_idx, end_idx])
                         strt_idx = nxt_strt_idx
                         vstart = nxt_vstart
 
-                unq_hit = grp["HMM_hit"].iloc[strt_idx:end_idx].unique()
+                unq_hit = grp["HMM_hit"].loc[strt_idx:end_idx].unique()
+                print(f"contig {name}: Start index: {strt_idx}, End index: {end_idx}, Unique hits: {len(unq_hit)}")
                 if vend - vstart >= phagesize and len(unq_hit) > minhit:
                     viral_indices[name].append([strt_idx, end_idx])
     return viral_indices
